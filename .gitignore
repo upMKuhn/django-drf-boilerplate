@@ -1,3 +1,7 @@
+# Project
+media/*
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -6,7 +10,10 @@ __pycache__/
 # C extensions
 *.so
 
+
 # Distribution / packaging
+.idea
+.vscode
 .Python
 build/
 develop-eggs/

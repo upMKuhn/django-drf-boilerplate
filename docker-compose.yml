@@ -7,14 +7,22 @@ services:
     ports:
       - 5432:5432
   web:
+    restart: on-failure
+    build: 
+      context: .
+      dockerfile: ops/frontend.Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+  backend:
+    restart: on-failure
     build:
       context: .
-      dockerfile: ops/app.Dockerfile
+      dockerfile: ops/backend.Dockerfile
     volumes:
     - .:/app
-    links:
+    depends_on:
     - db
     ports:
     - "8000:8000"
-    depends_on:
-      - db

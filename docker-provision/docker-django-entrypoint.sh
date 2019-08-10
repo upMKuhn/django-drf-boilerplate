@@ -13,7 +13,7 @@ fi
 
 # first arg is `-f` or `--some-option`
 if [ "${1#-}" != "$1" ] || [ -z "$1" ]; then
-	set -- uwsgi --ini /docker-provision/uwsgi.ini "$@"
+	set -- uwsgi --ini /app/docker-provision/uwsgi.ini "$@"
 fi
 
 exec "$@"

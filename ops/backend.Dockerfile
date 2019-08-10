@@ -1,4 +1,5 @@
 FROM python:3.7-alpine
+ENV PYTHONUNBUFFERED 1
 ENV PYTHONPATH=$PATH:/app/src
 
 RUN mkdir /app
@@ -20,7 +21,7 @@ RUN pipenv install --system
 
 ADD ./ .
 
-COPY ./ops/docker-django-entrypoint.sh /usr/local/bin/docker-django-entrypoint
+COPY ./docker-provision/docker-django-entrypoint.sh /usr/local/bin/docker-django-entrypoint
 ENTRYPOINT ["/usr/local/bin/docker-django-entrypoint"]
 
 # Socket

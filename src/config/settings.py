@@ -19,7 +19,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'v%^q7%_uf+k98I_6zh=z1-213%213SDAd&yn$m_lad=&yb3(m7o)x'
+SECRET_KEY = os.environ.get('SECRET_KEY', '{w[5o)8]hOLT-~ZdDrA>8?K7y/*TNiyb3(m7o*A3<T9~5969ngV)x')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
@@ -27,9 +27,26 @@ DEV = os.environ.get('DEBUG', 'True').lower() == 'true'
 
 ALLOWED_HOSTS = []
 
+AWS_ACCESS_KEY_ID = os.environ.get('AWS_ACCESS_KEY_ID', 'none')
+AWS_SECRET_ACCESS_KEY = os.environ.get('AWS_SECRET_ACCESS_KEY', 'none')
+AWS_STORAGE_BUCKET_NAME = os.environ.get('AWS_STORAGE_BUCKET_NAME', 'none')
+AWS_S3_ENDPOINT_URL = os.environ.get('AWS_S3_ENDPOINT_URL', 'none')
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+AWS_LOCATION = 'sentinary'
+
+MEDIA_ROOT = os.environ.get('MEDIA_ROOT', f'{BASE_DIR}/../media')
+
+STATIC_ROOT = '/static'
+STATIC_ROOT = os.environ.get('STATIC_ROOT', '/share/static')
+STATIC_FILES_DIRS = []
+STATIC_URL = '/static/'
+
+# 'storages.backends.s3boto3.S3Boto3Storage'
+DEFAULT_FILE_STORAGE = os.environ.get('DEFAULT_FILE_STORAGE', 'django.core.files.storage.FileSystemStorage')
 
 # Application definition
-
 DEFAULT_APPS = (
     'django.contrib.admin',
     'django.contrib.auth',
@@ -41,10 +58,12 @@ DEFAULT_APPS = (
 
 EXTERNAL_APPS = (
     'rest_framework',
+    'storages'
 )
 
 LOCAL_APPS = (
     'core',
+    'alerts'
 )
 
 INSTALLED_APPS = DEFAULT_APPS + EXTERNAL_APPS + LOCAL_APPS
@@ -79,21 +98,17 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/2.1/ref/settings/#databases
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'HOST': os.environ.get('DB_HOST', 'postgres'),
-        'NAME': os.environ.get('DB_NAME', 'intrinio'),
+        'HOST': os.environ.get('DB_HOST', 'db'),
+        'NAME': os.environ.get('DB_NAME', 'sentinary'),
         'PORT': os.environ.get('DB_PORT', 5432),
-        'USER': os.environ.get('DB_USER', 'intrinio'),
-        'PASSWORD': os.environ.get('DB_PASSWORD', 'intrinio'),
-        #        'TEST': {
-        #            'NAME': 'intrinio_test',
-        #        },
+        'USER': os.environ.get('DB_USER', 'root'),
+        'PASSWORD': os.environ.get('DB_PASSWORD', 'root'),
     }
 }
 # Password validation
@@ -114,7 +129,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.1/topics/i18n/
 
@@ -127,7 +141,6 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
@@ -144,5 +157,3 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.BasicAuthentication',
     ),
 }
-
-

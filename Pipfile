@@ -21,6 +21,8 @@ Faker = "*"
 Markdown = "*"
 PyJWT = "*"
 psycopg2 = "*"
+django-storages = "*"
+uwsgi = "*"
 
 [requires]
 python_version = "3.7"
