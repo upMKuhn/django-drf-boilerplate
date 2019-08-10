@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+Django = "*"
+django-cors-middleware = "*"
+django-extensions = "*"
+django-filter = "*"
+djangorestframework = "*"
+djangorestframework-jwt = "*"
+factory-boy = "*"
+python-dateutil = "*"
+pytz = "*"
+requests = "*"
+urllib3 = "*"
+Faker = "*"
+Markdown = "*"
+PyJWT = "*"
+psycopg2 = "*"
+django-storages = "*"
+uwsgi = "*"
+
+[requires]
+python_version = "3.7"

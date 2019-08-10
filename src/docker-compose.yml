@@ -1,0 +1,28 @@
+version: '3'
+services:
+  db:
+    image: postgres:11
+    env_file:
+      - ops/db.env
+    ports:
+      - 5432:5432
+  web:
+    restart: on-failure
+    build: 
+      context: .
+      dockerfile: ops/frontend.Dockerfile
+    depends_on:
+      - backend
+    ports:
+      - "80:80"
+  backend:
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: ops/backend.Dockerfile
+    volumes:
+    - .:/app
+    depends_on:
+    - db
+    ports:
+    - "8000:8000"
